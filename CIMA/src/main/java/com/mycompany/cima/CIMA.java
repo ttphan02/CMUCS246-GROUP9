@@ -10,7 +10,7 @@ package com.mycompany.cima;
  */
 public class CIMA {
     public static void main(String[] args) {
-        Home home = new Home();
+        CustomerManagement home = new CustomerManagement();
         home.setVisible(true);
     }
 }
