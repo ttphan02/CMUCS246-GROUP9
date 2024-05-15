@@ -86,5 +86,9 @@ public class Customers {
     public void setGt(String Gt) {
         this.Gt = Gt;
     }
+    @Override
+    public String toString(){
+        return name + "," + id + "," + email + "," + sdt + "," + address + "," + Gt + "," + DoB + "," + DoS;
+    }
     
 }

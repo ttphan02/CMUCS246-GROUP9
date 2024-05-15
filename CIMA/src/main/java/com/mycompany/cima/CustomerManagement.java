@@ -5,10 +5,15 @@
 package com.mycompany.cima;
 
 import java.awt.Color;
+import java.io.BufferedReader;
+import java.io.BufferedWriter;
+import java.io.FileReader;
+import java.io.FileWriter;
 import java.text.ParseException;
 import java.text.SimpleDateFormat;
 import java.util.ArrayList;
 import java.util.Date;
+import java.util.List;
 import java.util.regex.Matcher;
 import java.util.regex.Pattern;
 import javax.swing.JOptionPane;
@@ -31,8 +36,10 @@ public class CustomerManagement extends javax.swing.JFrame {
         this.setLocationRelativeTo(null);
         list = new ArrayList<>();
         model = (DefaultTableModel) ListCustomer.getModel();
+        DocFile();
+        ShowResult();
+        quanlity.setText(String.valueOf(list.size()));
     }
-
     /**
      * This method is called from within the constructor to initialize the form.
      * WARNING: Do NOT modify this code. The content of this method is always
@@ -84,6 +91,7 @@ public class CustomerManagement extends javax.swing.JFrame {
         lblDoB = new javax.swing.JLabel();
         lblSdt = new javax.swing.JLabel();
         lblIdMes = new javax.swing.JLabel();
+        quanlity = new javax.swing.JTextField();
 
         jLabel15.setFont(new java.awt.Font("Segoe UI Variable", 0, 10)); // NOI18N
         jLabel15.setText("__");
@@ -240,6 +248,12 @@ public class CustomerManagement extends javax.swing.JFrame {
 
         lblIdMes.setFont(new java.awt.Font("Segoe UI", 0, 10)); // NOI18N
 
+        quanlity.addActionListener(new java.awt.event.ActionListener() {
+            public void actionPerformed(java.awt.event.ActionEvent evt) {
+                quanlityActionPerformed(evt);
+            }
+        });
+
         javax.swing.GroupLayout layout = new javax.swing.GroupLayout(getContentPane());
         getContentPane().setLayout(layout);
         layout.setHorizontalGroup(
@@ -309,6 +323,13 @@ public class CustomerManagement extends javax.swing.JFrame {
                                     .addComponent(lblSdt, javax.swing.GroupLayout.PREFERRED_SIZE, 70, javax.swing.GroupLayout.PREFERRED_SIZE))))
                         .addGroup(layout.createParallelGroup(javax.swing.GroupLayout.Alignment.LEADING)
                             .addGroup(layout.createSequentialGroup()
+                                .addGap(185, 185, 185)
+                                .addGroup(layout.createParallelGroup(javax.swing.GroupLayout.Alignment.LEADING)
+                                    .addComponent(txtId2, javax.swing.GroupLayout.PREFERRED_SIZE, 134, javax.swing.GroupLayout.PREFERRED_SIZE)
+                                    .addGroup(layout.createSequentialGroup()
+                                        .addGap(42, 42, 42)
+                                        .addComponent(jLabel11))))
+                            .addGroup(layout.createSequentialGroup()
                                 .addPreferredGap(javax.swing.LayoutStyle.ComponentPlacement.UNRELATED)
                                 .addGroup(layout.createParallelGroup(javax.swing.GroupLayout.Alignment.TRAILING, false)
                                     .addGroup(layout.createSequentialGroup()
@@ -322,13 +343,9 @@ public class CustomerManagement extends javax.swing.JFrame {
                                         .addPreferredGap(javax.swing.LayoutStyle.ComponentPlacement.RELATED, javax.swing.GroupLayout.DEFAULT_SIZE, Short.MAX_VALUE)
                                         .addComponent(ClearSelected))
                                     .addComponent(jScrollPane1, javax.swing.GroupLayout.Alignment.LEADING, javax.swing.GroupLayout.PREFERRED_SIZE, 542, javax.swing.GroupLayout.PREFERRED_SIZE)))
-                            .addGroup(layout.createSequentialGroup()
-                                .addGap(185, 185, 185)
-                                .addGroup(layout.createParallelGroup(javax.swing.GroupLayout.Alignment.LEADING)
-                                    .addComponent(txtId2, javax.swing.GroupLayout.PREFERRED_SIZE, 134, javax.swing.GroupLayout.PREFERRED_SIZE)
-                                    .addGroup(layout.createSequentialGroup()
-                                        .addGap(42, 42, 42)
-                                        .addComponent(jLabel11)))))
+                            .addGroup(javax.swing.GroupLayout.Alignment.TRAILING, layout.createSequentialGroup()
+                                .addPreferredGap(javax.swing.LayoutStyle.ComponentPlacement.RELATED)
+                                .addComponent(quanlity, javax.swing.GroupLayout.PREFERRED_SIZE, 51, javax.swing.GroupLayout.PREFERRED_SIZE)))
                         .addContainerGap(81, Short.MAX_VALUE))))
         );
         layout.setVerticalGroup(
@@ -353,8 +370,10 @@ public class CustomerManagement extends javax.swing.JFrame {
                         .addPreferredGap(javax.swing.LayoutStyle.ComponentPlacement.RELATED)
                         .addComponent(jScrollPane1, javax.swing.GroupLayout.PREFERRED_SIZE, 277, javax.swing.GroupLayout.PREFERRED_SIZE))
                     .addGroup(layout.createSequentialGroup()
-                        .addGap(27, 27, 27)
-                        .addComponent(jLabel1)
+                        .addGap(24, 24, 24)
+                        .addGroup(layout.createParallelGroup(javax.swing.GroupLayout.Alignment.BASELINE)
+                            .addComponent(jLabel1)
+                            .addComponent(quanlity, javax.swing.GroupLayout.PREFERRED_SIZE, javax.swing.GroupLayout.DEFAULT_SIZE, javax.swing.GroupLayout.PREFERRED_SIZE))
                         .addPreferredGap(javax.swing.LayoutStyle.ComponentPlacement.RELATED, javax.swing.GroupLayout.DEFAULT_SIZE, Short.MAX_VALUE)
                         .addGroup(layout.createParallelGroup(javax.swing.GroupLayout.Alignment.BASELINE)
                             .addComponent(txtName, javax.swing.GroupLayout.PREFERRED_SIZE, javax.swing.GroupLayout.DEFAULT_SIZE, javax.swing.GroupLayout.PREFERRED_SIZE)
@@ -422,11 +441,23 @@ public class CustomerManagement extends javax.swing.JFrame {
     }// </editor-fold>//GEN-END:initComponents
 
     private void BreakActionPerformed(java.awt.event.ActionEvent evt) {//GEN-FIRST:event_BreakActionPerformed
+        try{
+            FileWriter fw = new FileWriter("CIMA.txt");
+            BufferedWriter bw = new BufferedWriter(fw);
+            for(Customers s : list){
+                bw.write(s.toString());
+                bw.newLine();
+            }
+            bw.close();
+            fw.close();
+        }catch(Exception e){
+            
+        }
         System.exit(0);
     }//GEN-LAST:event_BreakActionPerformed
 
     private void txtGtActionPerformed(java.awt.event.ActionEvent evt) {//GEN-FIRST:event_txtGtActionPerformed
-        // TODO add your handling code here:
+        
     }//GEN-LAST:event_txtGtActionPerformed
 
     public static boolean validateAndCheckDate(String dateString) {
@@ -473,7 +504,33 @@ public class CustomerManagement extends javax.swing.JFrame {
         Matcher matcher = pattern.matcher(phoneNumber);
         return matcher.matches();
     }
-   
+    public List<Customers> DocFile(){
+        try{
+            FileReader fr = new FileReader("CIMA.txt");
+            BufferedReader br = new BufferedReader(fr);
+            String line ="";
+            while(true){
+                line = br.readLine();
+                if(line == null){
+                    break;
+                }
+                
+                String txt[] = line.split(",");
+                String name = txt[0];
+                String id = txt[1];
+                String email = txt[2];
+                String sdt = txt[3];
+                String address = txt[4];
+                String Gt = txt[5];
+                String DoB = txt[6];
+                String DoS = txt[7]; 
+                list.add(new Customers(name, id, email, sdt, address, Gt, DoB, DoS));
+            }
+        }catch( Exception e){
+            e.printStackTrace();
+        }
+        return list;
+    }
     private void AddCustomerActionPerformed(java.awt.event.ActionEvent evt) {//GEN-FIRST:event_AddCustomerActionPerformed
         String difId = txtId.getText();
         String name = txtName.getText();
@@ -519,6 +576,8 @@ public class CustomerManagement extends javax.swing.JFrame {
                                 );
                                 list.add(ctm);
                                 ShowResult();
+                                quanlity.setText(String.valueOf(list.size()));
+
                          }else{
                             lblDoS.setText("Sai cú pháp !");
                             lblDoS.setForeground(Color.red);
@@ -544,7 +603,7 @@ public class CustomerManagement extends javax.swing.JFrame {
             lblIdMes.setForeground(Color.red);
             
         }
- 
+
     }//GEN-LAST:event_AddCustomerActionPerformed
 
     private void ShowResult() {
@@ -557,6 +616,7 @@ public class CustomerManagement extends javax.swing.JFrame {
     public void AddCustomer(Customers c) {
         list.add(c); 
         ShowResult();
+        quanlity.setText(String.valueOf(list.size()));
     }
     private void ResetActionPerformed(java.awt.event.ActionEvent evt) {//GEN-FIRST:event_ResetActionPerformed
         txtName.setText("");
@@ -583,6 +643,8 @@ public class CustomerManagement extends javax.swing.JFrame {
                     int rowIndex = selectedRows[i];
                     model.removeRow(rowIndex);
                     list.remove(rowIndex);
+                    quanlity.setText(String.valueOf(list.size()));
+
                 }
                 JOptionPane.showMessageDialog(rootPane,"Xóa Thành Công !");
             }
@@ -597,6 +659,7 @@ public class CustomerManagement extends javax.swing.JFrame {
                      indexRemove = i;
                      list.remove(indexRemove);
                      model.removeRow(indexRemove);
+                     quanlity.setText(String.valueOf(list.size()));
                      success = true;
                      break;
                  }
@@ -699,11 +762,14 @@ public class CustomerManagement extends javax.swing.JFrame {
         sds.setVisible(true);
     }//GEN-LAST:event_SortDoSActionPerformed
 
+    private void quanlityActionPerformed(java.awt.event.ActionEvent evt) {//GEN-FIRST:event_quanlityActionPerformed
+        
+    }//GEN-LAST:event_quanlityActionPerformed
+
     /**
      * @param args the command line arguments
      */
     public static void main(String args[]) {
-        /* Set the Nimbus look and feel */
         //<editor-fold defaultstate="collapsed" desc=" Look and feel setting code (optional) ">
         /* If Nimbus (introduced in Java SE 6) is not available, stay with the default look and feel.
          * For details see http://download.oracle.com/javase/tutorial/uiswing/lookandfeel/plaf.html 
@@ -726,7 +792,6 @@ public class CustomerManagement extends javax.swing.JFrame {
         }
         //</editor-fold>
         
-        /* Create and display the form */
         java.awt.EventQueue.invokeLater(new Runnable() {
             public void run() {
                 new CustomerManagement().setVisible(true);
@@ -768,6 +833,7 @@ public class CustomerManagement extends javax.swing.JFrame {
     private javax.swing.JLabel lblId;
     private javax.swing.JLabel lblIdMes;
     private javax.swing.JLabel lblSdt;
+    private javax.swing.JTextField quanlity;
     private javax.swing.JTextField txtAddress;
     private javax.swing.JTextField txtDoB;
     private javax.swing.JTextField txtDoS;
