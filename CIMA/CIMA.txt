@@ -1,5 +1,0 @@
-Phan Thanh Trúc,02,phan@gmail.com,0888888888,Đắk Lắk,Nam,01/01/2001,15/05/2024
-Huỳnh Ngọc Nhơn,03,huynh@gmail.com,0777777777,Đà Nẵng,Nam,02/02/2002,16/05/2024
-Nguyễn Quang Đức,04,duc@gmail.com,0666666666,Gia Lai,Nam,03/03/2003,17/05/2024
-Huỳnh Hoài Bảo,05,bao@gmail.com,0555555555,Bình Định,Nam,04/04/2004,18/05/2024
-Nguyễn Tiến Đạt,06,dat@gmail.com,0444444444,Nghệ An,Nam,05/05/2005,19/05/2024
